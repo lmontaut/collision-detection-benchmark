@@ -1,0 +1,54 @@
+{
+    "subshapenet_meshes": [
+    {
+        "name": "Bowl",
+        "id": "02880940",
+        "subid": "34875f8448f98813a2c59a4d90e63212"
+    },
+    {
+        "name": "Helmet",
+        "id": "03513137",
+        "subid": "e4ac62dd8caeabb1f80d3a620e00dd9a"
+    },
+    {
+        "name": "Bottle",
+        "id": "02876657",
+        "subid": "ac79fd7f10f274aba2c59a4d90e63212"
+    },
+    {
+        "name": "Mug",
+        "id": "03797390",
+        "subid": "52273f4b17505e898ef19a48ac4fcfdf"
+    },
+    {
+        "name": "Can",
+        "id": "02946921",
+        "subid": "e706cf452c4c124d77335fb90343dc9e"
+    },
+    {
+        "name": "Camera",
+        "id": "02942699",
+        "subid": "9726bf2b38d817eab169d2793795b997"
+    },
+    {
+        "name": "Ashcan",
+        "id": "02747177",
+        "subid": "5268d7d72312c3645fa85fb6e983b148"
+    },
+    {
+        "name": "Cap",
+        "id": "02954340",
+        "subid": "60104a0945f83b063f30fadefd6911f2"
+    },
+    {
+        "name": "Computer Keyboard",
+        "id": "03085013",
+        "subid": "277e8f771b0aa88a6c71abf53b20bc9c"
+    },
+    {
+        "name": "Earphone Keyboard",
+        "id": "03261776",
+        "subid": "c6d19db35f69bae7b6d9c2cee7f2f72b"
+    }
+]
+}

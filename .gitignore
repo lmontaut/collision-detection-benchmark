@@ -11,3 +11,9 @@ eggs/
 .eggs/
 *.egg-info/
 *.egg
+
+# ShapeNet meshes
+ShapeNetCore*
+
+# Results files
+*.csv

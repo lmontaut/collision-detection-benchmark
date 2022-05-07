@@ -110,6 +110,7 @@ METRICS_WITH_TIME: List[FIELDS] = [FIELDS.execution_time,
 
 # Path where results will be stored
 RESULTS_PATH: str = "exp/results"
+SHAPENET_PATH: str = "exp/shapenet/data"
 
 def load_solvers(max_iterations: int, tolerance: float,
                  cv_criterion: ConvergenceCriterion, python: bool = False):
@@ -418,6 +419,16 @@ def get_distance_category(distance_category: str):
         distances = [-1e-1, -1e-2, -1e-3, -1e-4]
     return distances
 
+
+def load_convex_hull(path: str):
+    """
+    Returns convex hull of mesh on path.
+    """
+    assert path is not None
+    loader = hppfcl.MeshLoader()
+    mesh: hppfcl.BVHModelOBB = loader.load(path)
+    _ = mesh.buildConvexHull(True, "Qt")
+    return mesh.convex
 
 
 def generate_random_pose():
