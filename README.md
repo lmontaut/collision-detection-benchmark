@@ -1,4 +1,4 @@
-# Collision Detection Benchmarks
+# Collision Detection Benchmarks [WIP]
 This repo contains the benchmarks for the paper "Collision Detection Accelerated: An Optimization Perspective" published at RSS 2022.
 There are two main benchmarks: the **ellipsoid** benchmark (strictly-convex shapes) and the **convex mesh** benchmark (non-strictly convex shapes), which are intended to compare the GJK algorithm and our method: Nesterov accelerated GJK.
 
