@@ -2,8 +2,6 @@ import numpy as np
 import hppfcl
 from hppfcl import GJKVariant, ConvergenceCriterion
 from pycolbench.simplexes import newSimplex, newVertex, copySimplex
-from pycolbench.projection import nesmino_project_onto_unit_sphere, nesmino_project_onto_simplex
-from pycolbench.projection import construct_nesmino_A_matrix_ellipsoid, construct_nesmino_A_matrix_polytope
 
 
 class CollisionSolverBase(object):
