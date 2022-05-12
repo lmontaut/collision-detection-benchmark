@@ -388,11 +388,7 @@ class GJKSolver(CollisionSolverBase):
         self.num_call_projection += 1
 
         # Update ray_norm
-        if not self.flag_inside:
-            self.ray_norm = np.linalg.norm(self.ray)
-
-        if self.flag_inside and self.ray_norm == 0:
-            self.flag_inside = True
+        self.ray_norm = np.linalg.norm(self.ray)
 
         # Update simplices
         self.current_s = copySimplex(self.next_s)
