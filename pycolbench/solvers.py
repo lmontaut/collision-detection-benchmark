@@ -1,6 +1,6 @@
 import numpy as np
 import hppfcl
-from hppfcl import GJKVariant, ConvergenceCriterion
+from hppfcl import GJKVariant, GJKConvergenceCriterion, GJKConvergenceCriterionType
 from pycolbench.simplexes import newSimplex, newVertex, copySimplex
 
 
@@ -114,13 +114,15 @@ class GJKSolverHPPFCL(CollisionSolverBase):
     def __init__(self, max_iterations: int, tolerance: float,
                  shape0: hppfcl.ShapeBase = None, shape1: hppfcl.ShapeBase = None,
                  gjk_variant: GJKVariant = GJKVariant.DefaultGJK,
-                 cv_criterion: ConvergenceCriterion = ConvergenceCriterion.DG,
+                 cv_criterion: GJKConvergenceCriterion = GJKConvergenceCriterion.DualityGap,
+                 cv_criterion_type: GJKConvergenceCriterionType = GJKConvergenceCriterionType.Absolute,
                  normalize_dir: bool = False, name: str = "NO_NAME",
                  compute_closest_points: bool = False):
         super().__init__(max_iterations, tolerance, shape0, shape1, name)
         self.gjk_variant = gjk_variant
         self.normalize_dir = normalize_dir
         self.cv_criterion = cv_criterion
+        self.cv_criterion_type = cv_criterion_type
         self.compute_closest_points = compute_closest_points
 
     def update_metrics(self):
@@ -142,7 +144,8 @@ class GJKSolverHPPFCL(CollisionSolverBase):
         self.gjk_solver = hppfcl.GJK(self.max_iterations, self.tolerance)
         self.gjk_solver.setGJKVariant(self.gjk_variant)
         self.gjk_solver.setConvergenceCriterion(self.cv_criterion)
-        self.gjk_solver.setNormalizeSupportDirection(self.normalize_dir)
+        self.gjk_solver.setConvergenceCriterionType(self.cv_criterion_type)
+        self.mink_diff.setNormalizeSupportDirection(self.normalize_dir)
         # Hint = index for first support call for hill climbing (indices of vertex)
         # By default hint = [0, 0] so this line is useless but left for reference
         hint = np.array([0, 0], dtype=np.int32)
@@ -175,7 +178,8 @@ class GJKSolverHPPFCL(CollisionSolverBase):
         self.gjk_solver = hppfcl.GJK(self.max_iterations, self.tolerance)
         self.gjk_solver.setGJKVariant(self.gjk_variant)
         self.gjk_solver.setConvergenceCriterion(self.cv_criterion)
-        self.gjk_solver.setNormalizeSupportDirection(self.normalize_dir)
+        self.gjk_solver.setConvergenceCriterionType(self.cv_criterion_type)
+        self.mink_diff.setNormalizeSupportDirection(self.normalize_dir)
         hint = np.array([0, 0], dtype=np.int32)
         self.gjk_solver.measureRunTime()
         self.gjk_solver.computeGJKAverageRunTime(self.mink_diff, self.ray, hint)
@@ -199,7 +203,8 @@ class GJKSolver(CollisionSolverBase):
     def __init__(self, max_iterations: int, tolerance: float,
                  shape0: hppfcl.ShapeBase = None, shape1: hppfcl.ShapeBase = None,
                  gjk_variant: GJKVariant = GJKVariant.DefaultGJK,
-                 cv_criterion: ConvergenceCriterion = ConvergenceCriterion.DG,
+                 cv_criterion: GJKConvergenceCriterion = GJKConvergenceCriterion.DualityGap,
+                 cv_criterion_type: GJKConvergenceCriterionType = GJKConvergenceCriterionType.Absolute,
                  normalize_dir: bool = False,
                  name: str = "NO_NAME", verbose: bool = False,
                  compute_closest_points: bool = False):
@@ -207,6 +212,7 @@ class GJKSolver(CollisionSolverBase):
         self.gjk_variant = gjk_variant
         self.normalize_dir = normalize_dir
         self.cv_criterion = cv_criterion
+        self.cv_criterion_type = cv_criterion_type
         self.verbose = verbose
         self.compute_closest_points = compute_closest_points
 
@@ -312,32 +318,41 @@ class GJKSolver(CollisionSolverBase):
         The default hppfcl cv criterion is also implemented for reference.
         """
         # Duality gap
-        if self.cv_criterion == ConvergenceCriterion.DG:
+        if self.cv_criterion == GJKConvergenceCriterion.DualityGap:
             self.duality_gap = 2 * self.ray @ (self.ray - self.v.w)
-            check_passed = (self.duality_gap - self.tolerance) <= 0
-        elif self.cv_criterion == ConvergenceCriterion.DG_RELATIVE:
-            self.duality_gap = 2 * self.ray @ (self.ray - self.v.w)
-            check_passed = ((self.duality_gap / (self.tolerance * self.ray_norm)) - self.tolerance * self.ray_norm) <= 0
+            if self.cv_criterion_type == GJKConvergenceCriterionType.Absolute:
+                check_passed = (self.duality_gap - self.tolerance) <= 0
+            elif self.cv_criterion_type == GJKConvergenceCriterionType.Relative:
+                check_passed = ((self.duality_gap / (self.tolerance * self.ray_norm)) - self.tolerance * self.ray_norm) <= 0
+            else:
+                print("INVALID CV CRITERION TYPE.")
+                return None
 
         # Default hppfcl criterion
-        elif self.cv_criterion == ConvergenceCriterion.DefaultCV:
+        elif self.cv_criterion == GJKConvergenceCriterion.VDB:
             self.alpha = max(self.alpha, self.omega)
             self.duality_gap = self.ray_norm - self.alpha
-            check_passed = (self.duality_gap - self.tolerance * self.ray_norm) <= 0
+            if self.cv_criterion_type == GJKConvergenceCriterionType.Relative:
+                check_passed = (self.duality_gap - self.tolerance * self.ray_norm) <= 0
+            else:
+                print("INVALID CV CRITERION TYPE, VDB can only be relative.")
+                return None
 
         # Duality gap + default hppfcl criterion
-        elif self.cv_criterion == ConvergenceCriterion.IDG:
+        elif self.cv_criterion == GJKConvergenceCriterion.IDG:
             self.alpha = max(self.alpha, self.omega)
             self.duality_gap = self.ray_norm * self.ray_norm - self.alpha * self.alpha
-            check_passed = (self.duality_gap - self.tolerance) <= 0
-        elif self.cv_criterion == ConvergenceCriterion.IDG_RELATIVE:
-            self.alpha = max(self.alpha, self.omega)
-            self.duality_gap = self.ray_norm * self.ray_norm - self.alpha * self.alpha
-            check_passed = ((self.duality_gap / (self.tolerance * self.ray_norm)) - self.tolerance * self.ray_norm) <= 0
+            if self.cv_criterion_type == GJKConvergenceCriterionType.Absolute:
+                check_passed = (self.duality_gap - self.tolerance) <= 0
+            elif self.cv_criterion_type == GJKConvergenceCriterionType.Relative:
+                check_passed = ((self.duality_gap / (self.tolerance * self.ray_norm)) - self.tolerance * self.ray_norm) <= 0
+            else:
+                print("INVALID CV CRITERION TYPE.")
+                return None
 
         else:
-            print("INVALID CV CRITERION")
-            return False
+            print("INVALID CV CRITERION.")
+            return None
 
         if self.verbose:
             print(f"{self.name} - duality gap: {self.duality_gap}")

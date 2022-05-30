@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     # -- SOLVERS
     max_iterations = 1000
-    cv_criterion = hppfcl.ConvergenceCriterion.DG
+    cv_criterion = hppfcl.GJKConvergenceCriterion.DualityGap
     solvers = load_solvers(max_iterations, args.tolerance, cv_criterion, args.python)
 
     # -- RUN

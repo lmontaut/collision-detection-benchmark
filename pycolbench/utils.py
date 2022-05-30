@@ -1,7 +1,7 @@
 import numpy as np
 import pinocchio as pin
 import hppfcl
-from hppfcl import GJKVariant, ConvergenceCriterion
+from hppfcl import GJKVariant, GJKConvergenceCriterion
 from pycolbench.solvers import GJKSolverHPPFCL, GJKSolver
 from typing import Any, List, Dict
 import pandas as pd
@@ -113,7 +113,7 @@ RESULTS_PATH: str = "exp/results"
 SHAPENET_PATH: str = "exp/shapenet/data"
 
 def load_solvers(max_iterations: int, tolerance: float,
-                 cv_criterion: ConvergenceCriterion, python: bool = False):
+                 cv_criterion: GJKConvergenceCriterion, python: bool = False):
     solvers = []
 
     # Vanilla GJK
