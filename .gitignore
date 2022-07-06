@@ -20,3 +20,5 @@ ShapeNetCore*
 
 plot_exp/.ipynb_checkpoints
 plot_exp/plots/continuous_ellipsoids
+plot_exp/continuous_ellipsoids/.ipynb_checkpoints
+plot_exp/continuous_ellipsoids/plots/continuous_ellipsoids

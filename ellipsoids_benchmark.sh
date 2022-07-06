@@ -10,4 +10,4 @@ do
     done
 done
 
-python plot_exp/continuous_ellipsoids_compute_metrics.py
+python plot_exp/continuous_ellipsoids/continuous_ellipsoids_compute_metrics.py
