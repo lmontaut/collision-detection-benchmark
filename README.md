@@ -1,5 +1,6 @@
 # Collision Detection Benchmarks [WIP]
 This repo contains the benchmarks for the paper "Collision Detection Accelerated: An Optimization Perspective" published at RSS 2022.
+You can find the paper [here](https://arxiv.org/abs/2205.09663) and the project page [here](https://lmontaut.github.io/nesterov-gjk.github.io/).
 There are two main benchmarks: the **ellipsoid** benchmark (strictly-convex shapes) and the **convex mesh** benchmark (non-strictly convex shapes), which are intended to compare the GJK algorithm and our method: Nesterov accelerated GJK.
 
 These benchmarks call the HPPFCL C++ library in which both GJK and Nesterov-accelerated GJK are implemented.
