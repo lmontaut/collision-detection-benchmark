@@ -17,7 +17,7 @@ To make the install easy, we recommend using conda to isolate the required packa
   - `git submodule update --init`
   - `cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_BUILD_TYPE=Release -DHPP_FCL_HAS_QHULL=ON ..`
   - `make install` 
-- Install this python library on the conda env: `pip install -e .`
+- Go back to the root of this repo (`cd ../..` if you are in `hpp-fcl/build) and install this python library on the conda env: `pip install -e .`
 
 # ShapeNet download
 Please visit https://shapenet.org.
