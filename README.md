@@ -53,7 +53,7 @@ We add the suffix `early` to `numit` and `execution_time` to track the performan
 The plots from the paper where obtained from the following benchmarks.
 You will need to have `pandas` to save results to `.csv` files and `jupyter` to plot the results: `conda install pandas jupyterlab`
 
-## Ellipsoids
+### 1 - Ellipsoids
 - Launch the benchmark: `./ellipsoids_benchmark.sh`
 - View the results: `jupyter lab` then go to `plot_exp/continuous_ellipsoids/continuous_ellipsoids_plots.ipynb` and run the notebook.
 
