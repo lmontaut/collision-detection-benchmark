@@ -152,6 +152,27 @@ def load_solvers_quick_benchmark(max_iterations: int, tolerance: float,
                                  normalize_dir = True, name="GJK + Nesterov + normalize (python)"))
     return solvers
 
+def load_solvers_benchmark(max_iterations: int, tolerance: float, cv_criterion: GJKConvergenceCriterion):
+    solvers = []
+
+    # Vanilla GJK
+    solvers.append(GJKSolverHPPFCL(max_iterations, tolerance,
+                                   gjk_variant = GJKVariant.DefaultGJK,
+                                   cv_criterion = cv_criterion, name = SOLVER_NAMES.GJK.value))
+
+    # Nesterov accelerated GJK without normalization heuristic
+    solvers.append(GJKSolverHPPFCL(max_iterations, tolerance,
+                                   gjk_variant = GJKVariant.NesterovAcceleration,
+                                   cv_criterion = cv_criterion,
+                                   normalize_dir = False, name = SOLVER_NAMES.Nesterov.value))
+
+    # Nesterov accelerated GJK with normalization heuristic
+    solvers.append(GJKSolverHPPFCL(max_iterations, tolerance,
+                                   gjk_variant = GJKVariant.NesterovAcceleration,
+                                   cv_criterion = cv_criterion,
+                                   normalize_dir = True, name = SOLVER_NAMES.NesterovNormalized.value))
+    return solvers
+
 
 def create_results_dir() -> None:
     """
