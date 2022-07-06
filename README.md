@@ -10,7 +10,7 @@ For prototyping, we have also reimplemented GJK and Nesterov-accelerated GJK in 
 To make the install easy, we recommend using conda to isolate the required packages needed to run the benchmarks from your system.
 - Clone this repo: `git clone --recursive https://github.com/lmontaut/collision-detection-benchmark.git && cd collision-detection-benchmark`
 - Install conda and a new conda environment: `conda create -n collision_benchmark python=3.8 && conda activate collision_benchmark`
-- Install dependencies: `conda install cmake pinocchio pandas tqdm`. For `pinocchio`, add the `conda-forge` channel `conda config --add channels conda-forge`.
+- Install dependencies: `conda install cmake pinocchio pandas tqdm qhull`. For `pinocchio`, add the `conda-forge` channel `conda config --add channels conda-forge`.
 - Re-activate the conda env `conda activate collision_benchmark` for the cmake path to take effect.
 - Install hppfcl:
   - `mkdir hpp-fcl/build && cd hpp-fcl/build`
