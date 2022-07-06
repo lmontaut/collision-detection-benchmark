@@ -49,6 +49,14 @@ We thus measure the following metrics for distance computation:
 - the suffix `rel` relates to the relative performance to vanilla GJK. Given a solver, a metric and a collision problem, we do `metric of GJK on problem P / metric of solver on problem P`.
 We add the suffix `early` to `numit` and `execution_time` to track the performance of the boolean collision check (`early` because boolean collision check is an early stop of distance computation).
 
+# Large benchmarks:
+The plots from the paper where obtained from the following benchmarks.
+You will need to have `pandas` to save results to `.csv` files and `jupyter` to plot the results: `conda install pandas jupyterlab`
+
+## Ellipsoids
+- Launch the benchmark: `./ellipsoids_benchmark.sh`
+- View the results: `jupyter lab` then go to `plot_exp/continuous_ellipsoids/continuous_ellipsoids_plots.ipynb` and run the notebook.
+
 # Citing this repo
 To cite Nesterov accelerated GJK and/or the associated benchmarks, please use the following bibtex lines:
 ```bibtex
