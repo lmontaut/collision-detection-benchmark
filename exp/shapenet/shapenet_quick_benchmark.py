@@ -5,7 +5,7 @@ import random
 import argparse
 import pinocchio as pin
 import hppfcl
-from pycolbench.utils import collision_quick_benchmark, load_solvers
+from pycolbench.utils import collision_quick_benchmark, load_solvers_quick_benchmark
 from pycolbench.utils import get_distance_category, load_convex_hull
 from pycolbench.utils import SHAPENET_PATH
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     # -- SOLVERS
     max_iterations = 1000
     cv_criterion = hppfcl.GJKConvergenceCriterion.DualityGap
-    solvers = load_solvers(max_iterations, args.tolerance, cv_criterion, args.python)
+    solvers = load_solvers_quick_benchmark(max_iterations, args.tolerance, cv_criterion, args.python)
 
     dists = get_distance_category(args.distance_category)
     print(f"Distances selected: {dists}")

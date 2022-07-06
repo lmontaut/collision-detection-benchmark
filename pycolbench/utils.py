@@ -112,7 +112,7 @@ METRICS_WITH_TIME: List[FIELDS] = [FIELDS.execution_time,
 RESULTS_PATH: str = "exp/results"
 SHAPENET_PATH: str = "exp/shapenet/data"
 
-def load_solvers(max_iterations: int, tolerance: float,
+def load_solvers_quick_benchmark(max_iterations: int, tolerance: float,
                  cv_criterion: GJKConvergenceCriterion, python: bool = False):
     solvers = []
 
