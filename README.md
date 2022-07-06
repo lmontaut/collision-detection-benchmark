@@ -37,6 +37,17 @@ The param `--opts` can be:
 - `--num_pairs`: number of collision pairs
 - `--num_poses`: number of relative poses btw each collision pair
 
+To compare the performances between Nesterov-accelerated GJK and vanilla GJK, we measure both the performance on boolean collision detection and distance computation.
+- For distance computation, both algorithms run until they have computed the distance which separates the shapes. This is measured by the Frank-Wolfe duality-gap reaching a certain tolerance; please read the paper for more info. 
+- For boolean collision check, both algos stop as soon as they find a separating hyperplane between the shapes or when a point inside their intersection has been found.
+
+We thus measure the following metrics for distance computation:
+- `dist_to_vanilla`: distance of the solution found by the solver to the solution found by vanilla GJK.
+- `numit`: number of iterations to converge.
+- `execution_time`
+- the suffix `rel` relates to the relative performance to vanilla GJK. Given a solver, a metric and a collision problem, we do `metric of GJK on problem P / metric of solver on problem P`.
+We add the suffix `early` to `numit` and `execution_time` to track the performance of the boolean collision check (`early` because boolean collision check is an early stop of distance computation).
+
 # Citing this repo
 To cite Nesterov accelerated GJK and/or the associated benchmarks, please use the following bibtex lines:
 ```bibtex
