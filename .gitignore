@@ -17,3 +17,6 @@ ShapeNetCore*
 
 # Results files
 *.csv
+
+plot_exp/.ipynb_checkpoints
+plot_exp/plots/continuous_ellipsoids
