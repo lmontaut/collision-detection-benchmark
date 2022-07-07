@@ -20,6 +20,10 @@ To make the install easy, we recommend using conda to isolate the required packa
   - `make install` 
 - Go back to the root of this repo (`cd ../..` if you are in `hpp-fcl/build`) and install this python library on the conda env: `pip install -e .`
 
+This was succesfully installed and tested on Manjaro `5.15.50` and Ubuntu `20.04`.
+The tested compilers were g++ version `9.4.0` and `12.1.0` and clang++ version `13.0.1`
+The required version for eigen is `3.4.0`.
+
 # ShapeNet download
 Please visit https://shapenet.org.
 Download `ShapeNetCore.v2` and place it in `exp/shapenet/data`.
